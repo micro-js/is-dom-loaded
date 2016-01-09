@@ -14,18 +14,31 @@ Check whether or not the document has finished loading
 
 ## Usage
 
-```js
+```javascript
 var isDomLoaded = require('@f/is-dom-loaded')
 
+var loaded = isDomLoaded()
+var fns = []
+
+if (!loaded) {
+  document.addEventListener('DOMContentLoaded', function listener () {
+    document.removeEventListener('DOMContentLoaded', listener)
+    fns.forEach(function (fn) {
+      fn()
+    })
+  })
+}
+
+function domready () {
+  loaded ? setTimeout(fn) : fns.push(fn)
+}
 ```
 
 ## API
 
-### isDomLoaded(arg)
+### isDomLoaded()
 
-- `arg` -
-
-**Returns:**
+**Returns:** Boolean indicating whether or not the document has finished loading
 
 ## License
 
